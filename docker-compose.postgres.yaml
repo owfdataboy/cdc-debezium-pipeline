@@ -1,0 +1,19 @@
+version: '3.1'
+
+
+services:
+  postgres:
+    image: docker.io/postgres:13.4
+    ports:
+      - "5432:5432"
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    environment:
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=postgres
+    volumes:
+       - ./custom-postgres.conf:/etc/postgresql/postgresql.conf 
+
+
+networks:
+    net:
+      driver: bridge

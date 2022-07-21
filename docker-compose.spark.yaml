@@ -1,0 +1,100 @@
+version: '3.1'
+
+
+services:
+    # Grafana Service
+    grafana:
+        image: grafana/grafana:6.5.0
+        container_name: grafana
+        restart: unless-stopped
+        ports:
+            - 3000:3000
+        env_file:
+            - ./Grafana/login_config
+        volumes:
+            - ./Grafana/grafana_db:/var/lib/grafana:rw #needs command 'sudo chmod -R 777 Grafana/*'
+            - ./Grafana/provisioning/datasource:/etc/grafana/provisioning/datasources
+            - ./Grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+        depends_on:
+            - prometheus
+        networks:
+            - net
+
+    # Prometheus Service   
+    prometheus:
+        image: prom/prometheus:v2.20.1
+        container_name: prometheus
+        restart: unless-stopped
+        ports:
+            - 9090:9090
+        command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+        volumes:
+            - ./Prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+            - ./Prometheus/prometheus_db:/prometheus/data:rw #needs command 'sudo chmod -R 777 Prometheus/prometheus_db'
+        depends_on:
+            - node-exporter
+        networks:
+            - net
+
+    # Node-Exporter Service  
+    node-exporter:
+        image: prom/node-exporter:v1.0.1
+        container_name: node-exporter
+        ports:
+            - 9100:9100
+        restart: unless-stopped
+        networks:
+            - net
+
+    # Spark
+    spark-master:
+        build:
+            context: ./Spark
+            dockerfile: Dockerfile
+        container_name: spark-master
+        hostname: master
+        ports:
+            - "8085:8085"
+            - "7077:7077"
+            - "4040:4040" # Driver
+        volumes:
+            - ./apps:/opt/spark-apps
+            - ./data:/opt/spark-data
+        environment:
+            - PYTHONUNBUFFERED=1
+            - SPARK_LOCAL_IP=spark-master
+            - SPARK_WORKLOAD=master
+        networks:
+            - net
+
+    spark-worker:
+        build:
+            context: ./Spark
+            dockerfile: Dockerfile
+        container_name: spark-worker
+        hostname: worker
+        ports:
+            - "8081:8081"
+            - "7000:7000"
+        depends_on:
+            - spark-master
+        environment:
+            - PYTHONUNBUFFERED=1
+            - SPARK_MASTER=spark://spark-master:7077
+            - SPARK_WORKER_CORES=1
+            - SPARK_WORKER_MEMORY=1G
+            - SPARK_DRIVER_MEMORY=1G
+            - SPARK_EXECUTOR_MEMORY=1G
+            - SPARK_WORKLOAD=worker
+            - SPARK_LOCAL_IP=spark-worker
+        networks:
+            - net
+        volumes:
+            - ./apps:/opt/spark-apps
+            - ./data:/opt/spark-data
+
+
+networks:
+    net:
+        external: true
