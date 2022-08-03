@@ -1,5 +1,4 @@
-# Monitoring Apache Spark and on Docker with Prometheus and Grafana
-# Spark streaming with Kafka and ingest to BigQuery
+# Spark do CDC with Postgres and ingest to BigQuery
 
 ## Document report
 The report of workflow is reported in docs: [here](https://docs.google.com/document/d/1a80YcYrUOGW9ag-onVeBWHbBQmHZcyMJn76rYU-v3NI/edit)
@@ -27,11 +26,11 @@ The goal of this project is to:
 Assuming that Docker is installed, simply execute the following command to build and run the Docker Containers:
 
 ```
-docker-compose -f docker-compose.spark.yaml -f docker-compose.kafka.yaml build && docker-compose -f docker-compose.spark.yaml -f docker-compose.kafka.yaml up
+docker-compose -f docker-compose.postgres.yaml -f docker-compose.kafka.yaml -f docker-compose.debezium.yaml -f docker-compose.spark.yaml build && docker-compose -f docker-compose.postgres.yaml -f docker-compose.kafka.yaml -f docker-compose.debezium.yaml -f docker-compose.spark.yaml up
 ```
 
 To shutdown Docker Containers, execute the following command:
 
 ```
-docker-compose -f docker-compose.spark.yaml -f docker-compose.kafka.yaml down
+docker-compose -f docker-compose.postgres.yaml -f docker-compose.kafka.yaml -f docker-compose.debezium.yaml -f docker-compose.spark.yaml down
 ```
