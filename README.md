@@ -1,16 +1,22 @@
 # Spark do CDC with Postgres and ingest to BigQuery
 
-## Document report
-The report of workflow is reported in docs: [here](https://docs.google.com/document/d/1a80YcYrUOGW9ag-onVeBWHbBQmHZcyMJn76rYU-v3NI/edit)
+## Document pipeline
+
+The workflow is reported in: [here](https://app.diagrams.net/#G1Z49aNm1p2B1VoEbvWlsSvBCsZn95zdLD)
 
 ## Goal
 
 The goal of this project is to:
 
--   Create a Docker Container that runs Spark
+-   Capture data change in Postgres database to Google Cloud BigQuery
+
+## Workflow
+
+-   Debezium Connector captures data change in Postgres database and publish messages to Apache Kafka
+-   Apache Kafka is a message queue that decouple source and destination
+-   Aapche Spark is responsible for processing data in Apache Kafka and load data to Google Cloud BigQuery
 -   Use Prometheus to get metrics from Spark applications and Node-exporter
 -   Use Grafana to display the metrics collected
--   Spark stream message with Kafka to BigQuery
 
 ## Notes
 
