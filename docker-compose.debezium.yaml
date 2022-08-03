@@ -4,12 +4,13 @@ version: '3.1'
 services:
   connect:
     image: quay.io/debezium/connect:${DEBEZIUM_VERSION}
+    container_name: debezium-connect
     ports:
       - "8083:8083"
     links:
-     - zookeeper
-     - kafka
-     - postgres
+      - zookeeper
+      - kafka
+      - postgres
     environment:
       - GROUP_ID=1
       - ADVERTISED_HOST_NAME=connect
@@ -17,6 +18,9 @@ services:
       - CONFIG_STORAGE_TOPIC=my-connect-configs
       - OFFSET_STORAGE_TOPIC=my-connect-offsets
       - STATUS_STORAGE_TOPIC=my-connect-statuses
+    networks:
+      - net
+    restart: always
 
 
 networks:

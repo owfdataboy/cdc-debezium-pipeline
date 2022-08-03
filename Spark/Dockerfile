@@ -53,11 +53,11 @@ ENV SPARK_MASTER_PORT=7077 \
     SPARK_MASTER_LOG=/opt/spark/logs/spark-master.out \
     SPARK_WORKER_LOG=/opt/spark/logs/spark-worker.out \
     SPARK_WORKER_WEBUI_PORT=8081 \
-    SPARK_WORKER_PORT=7000 \
+    SPARK_WORKER_PORT=7001 \
     SPARK_MASTER="spark://spark-master:7077" \
     SPARK_WORKLOAD="master"
 
-EXPOSE 8085 7077 6066 8081 5001
+EXPOSE 8085 8081 7077 7001 6066 5001
 
 RUN mkdir -p $SPARK_LOG_DIR && \
     touch $SPARK_MASTER_LOG && \
