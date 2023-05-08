@@ -1,0 +1,81 @@
+version: '3.1'
+
+
+
+services:
+  zookeeper:
+    container_name: zookeeper
+    image: debezium/zookeeper
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+    networks:
+      - dev_net
+    restart: always
+  
+  kafka-broker:
+    container_name: kafka-broker
+    image: debezium/kafka
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    networks:
+      - dev_net
+    restart: always
+    depends_on:
+      - zookeeper
+    environment:
+      - ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_LISTENERS=LISTENER_EXT://kafka-broker:29092,LISTENER_INT://kafka-broker:9092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=LISTENER_INT:PLAINTEXT,LISTENER_EXT:PLAINTEXT
+      - KAFKA_LISTENERS=LISTENER_INT://kafka-broker:9092,LISTENER_EXT://kafka-broker:29092
+      - KAFKA_INTER_BROKER_LISTENER_NAME=LISTENER_INT
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:master
+    container_name: kafka-ui
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local_cluster
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-broker:9092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
+      # - KAFKA_CLUSTERS_0_SCHEMAREGISTRY=http://schema-registry:8081
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME=local
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME=connect-0-1
+      # - KAFKA_CLUSTERS_0_KAFKACONNECT_1_NAME=connect-0-2
+      - KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS=http://kafka-connect:8083
+      # - KAFKA_CLUSTERS_0_KAFKACONNECT_1_ADDRESS=http://kafka-connect-2:8083
+      - AUTH_TYPE=LOGIN_FORM
+      - SPRING_SECURITY_USER_NAME=admin
+      - SPRING_SECURITY_USER_PASSWORD=admin
+    ports:
+      - "8080:8080"
+    networks:
+      - dev_net
+    restart: always
+    depends_on:
+      - kafka-broker
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:5.5.0
+    hostname: schema-registry
+    container_name: schema-registry
+    depends_on:
+      - zookeeper
+      - kafka-broker
+    ports:
+      - "8081:8081"
+    networks:
+      - dev_net
+    restart: always
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      # SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'PLAINTEXT://kafka-broker:9092'
+
+
+
+networks:
+  dev_net:
+    external: true
+    

@@ -1,0 +1,23 @@
+version: '3.9'
+
+
+services:  
+  postgres:
+    container_name: postgres
+    image: docker.io/postgres:13.4
+    ports:
+      - "5432:5432"
+    networks:
+      - dev_net
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    environment:
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=postgres
+    volumes:
+       - ./Postgres/custom-postgres.conf:/etc/postgresql/postgresql.conf 
+    restart: always
+
+
+networks:
+  dev_net:
+    driver: bridge

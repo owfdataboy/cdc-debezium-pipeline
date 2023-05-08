@@ -1,0 +1,44 @@
+version: '3.9'
+
+
+
+services:  
+  kafka-connect:
+    container_name: kafka-connect
+    image: debezium/connect
+    ports:
+      - "8083:8083"
+    environment:
+      BOOTSTRAP_SERVERS: kafka-broker:9092
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: my_connect_configs
+      OFFSET_STORAGE_TOPIC: my_connect_offsets
+      STATUS_STORAGE_TOPIC: my_connect_statuses
+      CONNECT_PLUGIN_PATH: /usr/share/java,/kafka/opt/connectors
+    volumes:
+      - ./Kafka/plugins:/kafka/opt/connectors/
+    networks:
+      - dev_net
+    restart: always
+    depends_on:
+      - zookeeper
+      - kafka-broker
+  
+  connect-ui:
+    container_name: connect-ui
+    image: debezium/debezium-ui
+    ports:
+      - "8000:8080"
+    environment:
+      - KAFKA_CONNECT_URIS=http://kafka-connect:8083
+    networks:
+      - dev_net
+    restart: always
+    depends_on:
+      - kafka-connect
+
+
+
+networks:
+  dev_net:
+    driver: bridge

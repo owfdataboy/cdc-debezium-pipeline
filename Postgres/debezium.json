@@ -1,0 +1,34 @@
+{
+    "name": "inventory-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+        "tasks.max": 1,
+        "database.hostname": "postgres",
+        "database.port": 5432,
+        "database.user": "postgres",
+        "database.password": "postgres",
+        "database.dbname": "postgres_db",
+        "database.server.name": "postgres",
+        "database.include.list": "postgres_db",
+
+        "schema.include.list": "public",
+
+        "plugin.name": "pgoutput",
+
+        "topic.prefix": "postgres_db",
+
+        "topic.creation.default.replication.factor": 3,
+        "topic.creation.default.partitions": 10,
+        "topic.creation.default.cleanup.policy": "compact",
+        "topic.creation.default.compression.type": "lz4",
+
+        "topic.creation.groups": "productlog",
+
+        "topic.creation.productlog.include": "postgres_db\\.public\\.cdc_client.*",
+        "topic.creation.productlog.replication.factor": 1,
+        "topic.creation.productlog.partitions": 20,
+        "topic.creation.productlog.cleanup.policy": "delete",
+        "topic.creation.productlog.retention.ms": 7776000000,
+        "topic.creation.productlog.compression.type": "producer"
+    }
+}
