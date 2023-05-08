@@ -1,4 +1,4 @@
-# Spark do CDC with Postgres and ingest to BigQuery
+# Debezium do Change Data Capture with Postgres Source to Google Cloud Storage Sink
 
 ## Document pipeline
 
