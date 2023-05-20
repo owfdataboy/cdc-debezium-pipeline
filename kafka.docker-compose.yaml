@@ -5,7 +5,7 @@ version: '3.1'
 services:
   zookeeper:
     container_name: zookeeper
-    image: debezium/zookeeper:1.9
+    image: debezium/zookeeper:${ZOOKEEPER_VERSION}
     ports:
       - "2181:2181"
       - "2888:2888"
@@ -16,7 +16,7 @@ services:
   
   kafka-broker:
     container_name: kafka-broker
-    image: debezium/kafka:1.9
+    image: debezium/kafka:${KAFKA_VERION}
     ports:
       - "9092:9092"
       - "29092:29092"
@@ -57,7 +57,7 @@ services:
       - kafka-broker
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:5.5.0
+    image: confluentinc/cp-schema-registry:${SCHEMA_REGISTRY_VERSION}
     hostname: schema-registry
     container_name: schema-registry
     depends_on:
