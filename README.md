@@ -46,4 +46,5 @@ docker compose -f postgres.docker-compose.yaml -f kafka.docker-compose.yaml -f d
 ![](.github/.screenshot/gcs-2.png)
 
 ### Google Cloud BigQuery sink
-![](.github/.screenshot/bq.png)
+![](.github/.screenshot/bq-1.png)
+![](.github/.screenshot/bq-2.png)
