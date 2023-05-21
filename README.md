@@ -1,6 +1,6 @@
 # Debezium do Change Data Capture with Postgres Source to GCP
 
-## Workflow
+## Pipeline Architecture
 
 The workflow is reported in: [here](https://app.diagrams.net/#G1Z49aNm1p2B1VoEbvWlsSvBCsZn95zdLD)
 
@@ -13,8 +13,8 @@ The goal of this project is to:
 ## Workflow
 
 -   Debezium Connector captures data change in Postgres database and publish messages to Apache Kafka
--   Apache Kafka is a message queue that decouple source and destination. In this scope, use single node Kafka Broker to development.
--   Debezium (Kafka Connect) is responsible for processing data in Apache Kafka and load data to Google Cloud Storage, Google Cloud BigQuery
+-   Apache Kafka is a message queue that decouple source and destination. In this scope, use single node Kafka Broker to develop
+-   Debezium (Kafka Connect) integrate with [Sink Connector of Confluent Platform](https://docs.confluent.io/platform/current/connect/kafka_connectors.html) is responsible for processing data in Apache Kafka and load data to Google Cloud Storage, Google Cloud BigQuery
 -   Use Kafka UI to manage and monitor Kafka Cluster
 
 ## Deployment
@@ -43,7 +43,7 @@ docker compose -f postgres.docker-compose.yaml -f kafka.docker-compose.yaml -f d
 ![](.github/.screenshot/kafka-connector.png)
 
 ### Google Cloud Storage sink
-![](.github/.screenshot/gcs.png)
+![](.github/.screenshot/gcs-2.png)
 
 ### Google Cloud BigQuery sink
 ![](.github/.screenshot/bq.png)
