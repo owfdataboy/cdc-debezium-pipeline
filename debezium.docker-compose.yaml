@@ -17,6 +17,7 @@ services:
       CONNECT_PLUGIN_PATH: /usr/share/java,/kafka/opt/connectors
     volumes:
       - ./Kafka/plugins:/kafka/opt/connectors/
+      - ./auth/gcp-auth.json:/kafka/opt/auth/gcp-auth.json
     networks:
       - dev_net
     restart: always
@@ -36,6 +37,7 @@ services:
     restart: always
     depends_on:
       - kafka-connect
+      - kafka-broker
 
 
 
