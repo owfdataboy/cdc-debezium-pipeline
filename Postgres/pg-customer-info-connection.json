@@ -2,7 +2,7 @@
     "name": "postgres-customer-info-source-connector",
     "config": {
         "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
-        "tasks.max": 1,
+        "tasks.max": "2",
         "database.hostname": "postgres",
         "database.port": 5432,
         "database.user": "postgres",
@@ -18,7 +18,7 @@
         "topic.prefix": "biz",
 
         "topic.creation.default.replication.factor": 1,
-        "topic.creation.default.partitions": 10,
+        "topic.creation.default.partitions": 5,
         "topic.creation.default.cleanup.policy": "compact",
         "topic.creation.default.compression.type": "lz4",
 
@@ -26,7 +26,7 @@
 
         "topic.creation.productlog.include": "biz\\.public\\.cdc_client.*",
         "topic.creation.productlog.replication.factor": 1,
-        "topic.creation.productlog.partitions": 20,
+        "topic.creation.productlog.partitions": 5,
         "topic.creation.productlog.cleanup.policy": "delete",
         "topic.creation.productlog.retention.ms": 7776000000,
         "topic.creation.productlog.compression.type": "producer"
