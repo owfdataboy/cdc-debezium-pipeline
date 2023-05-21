@@ -39,7 +39,7 @@ services:
       - KAFKA_CLUSTERS_0_NAME=local_cluster
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-broker:9092
       - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper:2181
-      # - KAFKA_CLUSTERS_0_SCHEMAREGISTRY=http://schema-registry:8081
+      - KAFKA_CLUSTERS_0_SCHEMAREGISTRY=http://schema-registry:8081
       - KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME=local
       - KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME=connect-0-1
       # - KAFKA_CLUSTERS_0_KAFKACONNECT_1_NAME=connect-0-2
@@ -55,6 +55,7 @@ services:
     restart: always
     depends_on:
       - kafka-broker
+      - kafka-connect
 
   schema-registry:
     image: confluentinc/cp-schema-registry:${SCHEMA_REGISTRY_VERSION}

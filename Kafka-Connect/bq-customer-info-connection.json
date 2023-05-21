@@ -1,0 +1,20 @@
+{
+    "name": "bq-customer-info-sink-connector",
+    "config": {
+        "connector.class": "com.wepay.kafka.connect.bigquery.BigQuerySinkConnector",
+        "tasks.max": "3",
+        "topics": "biz.public.customer_info",
+        "sanitizeTopics": "true",
+        "autoCreateTables": "true",
+        "allowNewBigQueryFields": "true",
+        "allowBigQueryRequiredFieldRelaxation": "true",
+        "schemaRetriever": "com.wepay.kafka.connect.bigquery.retrieve.IdentitySchemaRetriever",
+        "project": "int-data-department",
+        "defaultDataset": "giai_test",
+        "keyfile": "/kafka/opt/auth/gcp-auth.json",
+        "transforms": "RegexTransformation",
+        "transforms.RegexTransformation.type": "org.apache.kafka.connect.transforms.RegexRouter",
+        "transforms.RegexTransformation.regex": "(biz.public.)(.*)",
+        "transforms.RegexTransformation.replacement": "$2"
+    }
+}
