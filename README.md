@@ -13,8 +13,8 @@ The goal of this project is to:
 ## Workflow
 
 -   Debezium Connector captures data change in Postgres database and publish messages to Apache Kafka
--   Apache Kafka is a message queue that decouple source and destination. In this scope, use single node Kafka Broker to development.
--   Debezium (Kafka Connect) is responsible for processing data in Apache Kafka and load data to Google Cloud Storage, Google Cloud BigQuery
+-   Apache Kafka is a message queue that decouple source and destination. In this scope, use single node Kafka Broker to develop
+-   Debezium (Kafka Connect) integrate with [Sink Connector of Confluent Platform](https://docs.confluent.io/platform/current/connect/kafka_connectors.html) is responsible for processing data in Apache Kafka and load data to Google Cloud Storage, Google Cloud BigQuery
 -   Use Kafka UI to manage and monitor Kafka Cluster
 
 ## Deployment
