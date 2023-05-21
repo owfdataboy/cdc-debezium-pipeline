@@ -1,4 +1,4 @@
-# Debezium do Change Data Capture with Postgres Source to GCP
+# Debezium do Change Data Capture with Postgres Source to Google Cloud Platform
 
 ## Pipeline Architecture
 
@@ -8,7 +8,7 @@ The workflow is reported in: [here](https://app.diagrams.net/#G1Z49aNm1p2B1VoEbv
 
 The goal of this project is to:
 -   Capture data change in Postgres database to Google Cloud Storage Sink
--   Capture data change in Postgres database to Google Cloud BigQuery Sink (Incoming)
+-   Capture data change in Postgres database to Google Cloud BigQuery Sink
 
 ## Workflow
 
