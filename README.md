@@ -1,6 +1,6 @@
 # Debezium do Change Data Capture with Postgres Source to GCP
 
-## Workflow
+## Pipeline Architecture
 
 The workflow is reported in: [here](https://app.diagrams.net/#G1Z49aNm1p2B1VoEbvWlsSvBCsZn95zdLD)
 
@@ -43,7 +43,7 @@ docker compose -f postgres.docker-compose.yaml -f kafka.docker-compose.yaml -f d
 ![](.github/.screenshot/kafka-connector.png)
 
 ### Google Cloud Storage sink
-![](.github/.screenshot/gcs.png)
+![](.github/.screenshot/gcs-2.png)
 
 ### Google Cloud BigQuery sink
 ![](.github/.screenshot/bq.png)
