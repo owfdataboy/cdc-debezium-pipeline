@@ -32,6 +32,9 @@ docker compose -f postgres.docker-compose.yaml -f kafka.docker-compose.yaml -f d
 ```
 
 ## Preview
+## Execution Plan on Postgres Citus Cluster
+![](.github/.screenshot/pg-citus.png)
+
 ## Use Kafka UI to manage Broker, Topic, Partition, Connector (Kafka Connect), metadata and so on....
 ### Kafka Broker
 ![](.github/.screenshot/kafka-broker.png)
