@@ -135,3 +135,4 @@ auth/*.json
 */plugins
 
 Postgres/data/*
+Citus/data/*
