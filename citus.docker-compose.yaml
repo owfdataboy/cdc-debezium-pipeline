@@ -2,33 +2,54 @@
 # see citusdata/tools/packaging_automation/templates/docker/latest/docker-compose.tmpl.yml.
 version: "3"
 
+
+
 services:
   master:
     container_name: "${COMPOSE_PROJECT_NAME:-citus}_master"
     image: "citusdata/citus:11.3.0"
     ports: ["${COORDINATOR_EXTERNAL_PORT:-5432}:5432"]
     labels: ["com.citusdata.role=Master"]
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    volumes:
+       - ./Citus/custom-citus.conf:/etc/postgresql/postgresql.conf
+      #  - ./Citus/data:/var/lib/postgresql/data
     environment: &AUTH
       POSTGRES_USER: "${POSTGRES_USER:-postgres}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-postgres}"
       PGUSER: "${POSTGRES_USER:-postgres}"
       PGPASSWORD: "${POSTGRES_PASSWORD:-postgres}"
       POSTGRES_HOST_AUTH_METHOD: "${POSTGRES_HOST_AUTH_METHOD:-trust}"
+    networks:
+      - dev_net
   worker:
     image: "citusdata/citus:11.3.0"
     labels: ["com.citusdata.role=Worker"]
     depends_on: [manager]
     environment: *AUTH
-    command: "/wait-for-manager.sh"
+    command: "postgres -c config_file=/etc/postgresql/postgresql.conf && /wait-for-manager.sh"
     volumes:
       - healthcheck-volume:/healthcheck
+      - ./Citus/custom-citus.conf:/etc/postgresql/postgresql.conf
+      - ./Citus/data:/var/lib/postgresql/data
+    networks:
+    - dev_net
   manager:
     container_name: "${COMPOSE_PROJECT_NAME:-citus}_manager"
     image: "citusdata/membership-manager:0.3.0"
     volumes:
       - "${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock"
       - healthcheck-volume:/healthcheck
+      # - ./Citus/data:/var/lib/postgresql/data
     depends_on: [master]
     environment: *AUTH
+    networks:
+      - dev_net
 volumes:
   healthcheck-volume:
+
+
+
+networks:
+  dev_net:
+    driver: bridge
