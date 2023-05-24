@@ -17,18 +17,40 @@ The goal of this project is to:
 -   Debezium (Kafka Connect) integrate with [Sink Connector of Confluent Platform](https://docs.confluent.io/platform/current/connect/kafka_connectors.html) is responsible for processing data in Apache Kafka and load data to Google Cloud Storage, Google Cloud BigQuery
 -   Use Kafka UI to manage and monitor Kafka Cluster
 
-## Deployment
+## Deployment Service Cluster
 
 Assuming that Docker is installed, simply execute the following command to build and run the Docker Containers:
 
 ```
-docker compose -f postgres.docker-compose.yaml -f kafka.docker-compose.yaml -f debezium.docker-compose.yaml up
+docker compose -f [postgres.docker-compose.yaml|citus.docker-compose.yaml] -f kafka.docker-compose.yaml -f debezium.docker-compose.yaml up
 ```
 
 To shutdown Docker Containers, execute the following command:
 
 ```
-docker compose -f postgres.docker-compose.yaml -f kafka.docker-compose.yaml -f debezium.docker-compose.yaml down
+docker compose -f [postgres.docker-compose.yaml|citus.docker-compose.yaml] -f kafka.docker-compose.yaml -f debezium.docker-compose.yaml down
+```
+
+## Deployment Debezium
+
+### Register source and sink connector
+
+Example for source Citus connector:
+
+```
+curl -X POST -H "Content-Type: application/json" --data @./Kafka-Connect/citus-customer-info-connection.json localhost:8083/connectors
+```
+
+To get connector information, use a command:
+
+```
+curl -i -X GET -H "Accept:application/json" localhost:8083/connectors/citus-customer-info-source-connector
+```
+
+To delete connector, use a command:
+
+```
+curl -i -X DELETE localhost:8083/connectors/citus-customer-info-source-connector
 ```
 
 ## Preview
