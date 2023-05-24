@@ -1,5 +1,5 @@
 {
-    "name": "postgres-customer-info-source-connector",
+    "name": "citus-customer-info-source-connector",
     "config": {
         "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
         "tasks.max": "2",
