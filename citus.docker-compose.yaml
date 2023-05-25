@@ -13,7 +13,7 @@ services:
     command: postgres -c config_file=/etc/postgresql/postgresql.conf
     volumes:
        - ./Citus/custom-citus.conf:/etc/postgresql/postgresql.conf
-      #  - ./Citus/data:/var/lib/postgresql/data
+       - ./Citus/data/master:/var/lib/postgresql/data
     environment: &AUTH
       POSTGRES_USER: "${POSTGRES_USER:-postgres}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-postgres}"
@@ -31,7 +31,7 @@ services:
     volumes:
       - healthcheck-volume:/healthcheck
       - ./Citus/custom-citus.conf:/etc/postgresql/postgresql.conf
-      - ./Citus/data:/var/lib/postgresql/data
+      - ./Citus/data/worker:/var/lib/postgresql/data
     networks:
     - dev_net
   manager:
@@ -40,7 +40,6 @@ services:
     volumes:
       - "${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock"
       - healthcheck-volume:/healthcheck
-      # - ./Citus/data:/var/lib/postgresql/data
     depends_on: [master]
     environment: *AUTH
     networks:
