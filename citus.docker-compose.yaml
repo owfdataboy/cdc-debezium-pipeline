@@ -7,7 +7,7 @@ version: "3"
 services:
   master:
     container_name: "${COMPOSE_PROJECT_NAME:-citus}_master"
-    image: "citusdata/citus:11.3.0"
+    image: citusdata/citus:${CITUS_VERSION}
     ports: ["${COORDINATOR_EXTERNAL_PORT:-5432}:5432"]
     labels: ["com.citusdata.role=Master"]
     command: postgres -c config_file=/etc/postgresql/postgresql.conf
@@ -23,7 +23,7 @@ services:
     networks:
       - dev_net
   worker:
-    image: "citusdata/citus:11.3.0"
+    image: citusdata/citus:${CITUS_VERSION}
     labels: ["com.citusdata.role=Worker"]
     depends_on: [manager]
     environment: *AUTH
@@ -36,7 +36,7 @@ services:
     - dev_net
   manager:
     container_name: "${COMPOSE_PROJECT_NAME:-citus}_manager"
-    image: "citusdata/membership-manager:0.3.0"
+    image: citusdata/membership-manager:${CITUS_MANAGER_VERSION}
     volumes:
       - "${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock"
       - healthcheck-volume:/healthcheck

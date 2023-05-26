@@ -16,7 +16,7 @@ services:
   
   kafka-broker:
     container_name: kafka-broker
-    image: debezium/kafka:${KAFKA_VERION}
+    image: debezium/kafka:${KAFKA_VERSION}
     ports:
       - "9092:9092"
       - "29092:29092"

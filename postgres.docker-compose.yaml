@@ -4,7 +4,7 @@ version: '3.9'
 services:  
   postgres:
     container_name: postgres
-    image: docker.io/postgres:${POSTGRES_VERION}
+    image: docker.io/postgres:${POSTGRES_VERSION}
     ports:
       - "5432:5432"
     networks:
