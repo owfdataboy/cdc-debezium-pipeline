@@ -19,6 +19,41 @@ The goal of this project is to:
 
 ## Deployment Service Cluster
 
+### We can use pre-built Docker Image services to deploy a clusters.
+
+See all images here: https://github.com/zaivi/cdc-debezium-postgres-gcp-pipeline/pkgs/container/cdc-debezium-postgres-gcp-pipeline/versions
+
+Pull image from the command line:
+
+```bash
+$ docker pull ghcr.io/zaivi/cdc-debezium-postgres-gcp-pipeline:<tag>
+```
+
+Use as base image in Dockerfile:
+
+```Dockerfile
+FROM ghcr.io/zaivi/cdc-debezium-postgres-gcp-pipeline:<tag>
+```
+
+### Image lists
+
+<!-- BEGIN IMAGE LIST -->
+- [`Citus Cluster`](#)
+    - [`ghcr.io/zaivi/cdc-debezium-postgres-gcp-pipeline:citus-data`](https://github.com/zaivi/cdc-debezium-postgres-gcp-pipeline/pkgs/container/cdc-debezium-postgres-gcp-pipeline/96801521?tag=citus-data)
+    - [`ghcr.io/zaivi/cdc-debezium-postgres-gcp-pipeline:membership-manager`](https://github.com/zaivi/cdc-debezium-postgres-gcp-pipeline/pkgs/container/cdc-debezium-postgres-gcp-pipeline/96803717?tag=membership-manager)
+- [`Postgres`](#)
+    - [`ghcr.io/zaivi/cdc-debezium-postgres-gcp-pipeline:postgres`](https://github.com/zaivi/cdc-debezium-postgres-gcp-pipeline/pkgs/container/cdc-debezium-postgres-gcp-pipeline/96803466?tag=postgres)
+- [`Kafka Cluster`](#)
+    - [`ghcr.io/zaivi/cdc-debezium-postgres-gcp-pipeline:kafka`](https://github.com/zaivi/cdc-debezium-postgres-gcp-pipeline/pkgs/container/cdc-debezium-postgres-gcp-pipeline/96802541?tag=kafka)
+    - [`ghcr.io/zaivi/cdc-debezium-postgres-gcp-pipeline:zookeeper`](https://github.com/zaivi/cdc-debezium-postgres-gcp-pipeline/pkgs/container/cdc-debezium-postgres-gcp-pipeline/96802970?tag=zookeeper)
+    - [`ghcr.io/zaivi/cdc-debezium-postgres-gcp-pipeline:schema-registry`](https://github.com/zaivi/cdc-debezium-postgres-gcp-pipeline/pkgs/container/cdc-debezium-postgres-gcp-pipeline/96804722?tag=schema-registry)
+    - [`ghcr.io/zaivi/cdc-debezium-postgres-gcp-pipeline:kafka-ui`](https://github.com/zaivi/cdc-debezium-postgres-gcp-pipeline/pkgs/container/cdc-debezium-postgres-gcp-pipeline/96801909?tag=kafka-ui)
+- [`Debezium (Kafka Connect)`](#)
+    - [`ghcr.io/zaivi/cdc-debezium-postgres-gcp-pipeline:kafka-connect`](https://github.com/zaivi/cdc-debezium-postgres-gcp-pipeline/pkgs/container/cdc-debezium-postgres-gcp-pipeline/96803612?tag=kafka-connect)
+
+
+### Otherwise, we pull image when running `docker-compose` file
+
 Assuming that Docker is installed, simply execute the following command to build and run the Docker Containers:
 
 ```
