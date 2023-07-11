@@ -23,10 +23,16 @@
         "partitioner.class": "io.confluent.connect.storage.partitioner.DefaultPartitioner",
         "key.converter": "org.apache.kafka.connect.storage.StringConverter",
 
-        
-        "errors.tolerance": "all", # Add Dead letter queue
+        # Add Dead letter queue
+        "errors.tolerance": "all",
         "errors.deadletterqueue.topic.name":"dlq_sink",
         "errors.deadletterqueue.topic.replication.factor": 1,
         "errors.deadletterqueue.context.headers.enable":true
+
+        # Add SMT
+        "transforms": "filter",
+        "transforms.filter.type": "io.debezium.transforms.Filter",
+        "transforms.filter.language": "jsr223.groovy",
+        "transforms.filter.condition": "value.op == 'u' && value.before.sent == false && value.after.sent == true"
     }
 }
