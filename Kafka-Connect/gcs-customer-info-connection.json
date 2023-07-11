@@ -21,6 +21,12 @@
         "format.class": "io.confluent.connect.gcs.format.json.JsonFormat",
         "value.converter": "org.apache.kafka.connect.json.JsonConverter",
         "partitioner.class": "io.confluent.connect.storage.partitioner.DefaultPartitioner",
-        "key.converter": "org.apache.kafka.connect.storage.StringConverter"
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+
+        
+        "errors.tolerance": "all", # Add Dead letter queue
+        "errors.deadletterqueue.topic.name":"dlq_sink",
+        "errors.deadletterqueue.topic.replication.factor": 1,
+        "errors.deadletterqueue.context.headers.enable":true
     }
 }
