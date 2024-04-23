@@ -4,6 +4,8 @@
 
 The workflow is reported in: [here](https://app.diagrams.net/#G1Z49aNm1p2B1VoEbvWlsSvBCsZn95zdLD)
 
+![](.github/.screenshot/debezium_spark_pipeline.png)
+
 ## Goal
 
 The goal of this project is to:
